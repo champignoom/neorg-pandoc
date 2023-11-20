@@ -71,6 +71,10 @@ end
 local function handle_event(event)
     local metadata = get_metadata(event.buffer)
     local pandoc_args = metadata and metadata['pandoc-args'] or {}
+    for k,v in pairs(pandoc_args) do
+        pandoc_args[k] = vim.fn.trim(v)
+    end
+
     local this_dir = debug.getinfo(1).source:match("@?(.*/)")
     local plugin_dir = this_dir .. '../../../../../'
 
