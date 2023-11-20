@@ -81,15 +81,16 @@ local function handle_event(event)
 
     local input_file = event.filehead .. '/' .. event.filename
     local output_file = event.content[1]
-    local cmd = vim.tbl_flatten{ 'pandoc', '--from', plugin_dir .. 'init.lua', '-o', output_file, pandoc_args, input_file, '2>&1'}
-    local f = io.popen(table.concat(cmd, ' '))
-    local output = f:read("*all")
-    f:close()
-    if output and #output > 0 then
-        log.warn(output)
-    else
-        print('pandoc finished')
+    local cmd = vim.tbl_flatten{ 'pandoc', '--from', plugin_dir .. 'init.lua', '-o', output_file, pandoc_args, input_file }
+    local function on_exit(result)
+        if result.code ~= 0 then
+            log.warn(result.stdout .. "\n" .. result.stderr)
+        else
+            print('pandoc finished')
+        end
     end
+    print('pandoc running ...')
+    vim.system(cmd, {text=true}, on_exit)
 end
 
 
