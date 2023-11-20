@@ -1,3 +1,8 @@
+-- package.path = "../?.lua;" .. package.path
+--
+local this_path = debug.getinfo(1).source:match("@?(.*/)")
+package.path = this_path .. "?.lua;" .. package.path
+
 require "globals"
 
 local token = require "token"
@@ -54,9 +59,9 @@ _G.grammar = {
 G = P(grammar)
 
 function Reader(input, _reader_options)
-    print "============[INPUT:]============"
-    print(input)
-    print "============[PARSE:]============"
+    -- print "============[INPUT:]============"
+    -- print(input)
+    -- print "============[PARSE:]============"
     local match = lpeg.match(G, tostring(input))
     -- local match = pandoc.Pandoc {
     --     pandoc.Para {
@@ -64,6 +69,6 @@ function Reader(input, _reader_options)
     --         pandoc.RawInline("html", "<h1>heading</h1>"),
     --     },
     -- }
-    print "============[RESULT]============"
+    -- print "============[RESULT]============"
     return match
 end
