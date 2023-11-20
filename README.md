@@ -68,6 +68,17 @@ Now run `:Neorg pandoc output-file.pdf`. According to the metadata, a
 pdf will be generated from this norg file by ConTeXt, using a template
 file named `template.mkiv`, without rendering metadata block.
 
+If you want to generate markdown file, you can write
+
+    pandoc-args: [
+        --to=gfm
+    ]
+
+in the metadata, and then run `:Neorg pandoc output-file.md` .
+
+Other formats like docx are not yet tested but should theorectically
+work as well.
+
 ## Command-line Usage
 
 ``` bash
