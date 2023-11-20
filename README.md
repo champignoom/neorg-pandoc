@@ -52,7 +52,7 @@ authors: someone
 
 pandoc-ignore-metadata: true
 pandoc-args: [
-    -t context
+    --to=context
     --template=template.mkiv
 ]
 @end
